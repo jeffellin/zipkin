@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.integration.annotation.Gateway;
 import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.integration.annotation.MessagingGateway;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,24 +36,17 @@ public class MessageApplication {
 		SpringApplication.run(MessageApplication.class, args);
 	}
 
-	@MessagingGateway
-	interface ReplySender {
-
-		@Gateway(requestChannel = Source.OUTPUT)
-		void sendMessage(String msg);
-	}
-
 	@Bean
 	public Sampler defaultSampler() {
 		return Sampler.ALWAYS_SAMPLE;
 	}
 
-	@Bean
-	public Tracing tracing() {
-		return Tracing.newBuilder()
-				.localServiceName("spring-amqp-producer")
-				.build();
-	}
+
+
+
+/*
+args
+
 
 	@Bean
 	public SpringRabbitTracing springRabbitTracing(Tracing tracing) {
@@ -69,12 +63,13 @@ public class MessageApplication {
 		// other customizations as required
 		return rabbitTemplate;
 	}
+*/
 
 	@RestController
 	class MessageServiceRestController {
 
 		@Autowired
-		ReplySender replySender;
+		Source source;
 
 		@Autowired
 		RabbitTemplate rabbitTemplate;
@@ -88,9 +83,7 @@ public class MessageApplication {
 
 			log.info("this is the message sender");
 
-			//this.replySender.sendMessage("hello world");
-
-			rabbitTemplate.convertAndSend("foo");
+			source.output().send(MessageBuilder.withPayload("hello world").build());
 
 			return "Hello World";
 
