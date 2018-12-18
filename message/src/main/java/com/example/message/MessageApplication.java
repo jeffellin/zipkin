@@ -36,34 +36,7 @@ public class MessageApplication {
 		SpringApplication.run(MessageApplication.class, args);
 	}
 
-	@Bean
-	public Sampler defaultSampler() {
-		return Sampler.ALWAYS_SAMPLE;
-	}
 
-
-
-
-/*
-args
-
-
-	@Bean
-	public SpringRabbitTracing springRabbitTracing(Tracing tracing) {
-		return SpringRabbitTracing.newBuilder(tracing)
-				.writeB3SingleFormat(false) // for more efficient propagation
-				.remoteServiceName("my-mq-service")
-				.build();
-	}
-
-	@Bean
-	public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory,
-										 SpringRabbitTracing springRabbitTracing) {
-		RabbitTemplate rabbitTemplate = springRabbitTracing.newRabbitTemplate(connectionFactory);
-		// other customizations as required
-		return rabbitTemplate;
-	}
-*/
 
 	@RestController
 	class MessageServiceRestController {

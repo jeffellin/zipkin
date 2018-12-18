@@ -42,10 +42,7 @@ public class Hop1Application {
 		return new RestTemplate();
 	}
 
-	@Bean
-	public Sampler defaultSampler() {
-		return Sampler.ALWAYS_SAMPLE;
-	}
+
 
 	@MessageEndpoint
 	class MessageProcessor {
@@ -58,7 +55,7 @@ public class Hop1Application {
 		@ServiceActivator(inputChannel = Sink.INPUT)
 		public void onMessage(String msg) {
 
-			String url = "http://localhost:8082/hi";
+			String url = "http://localhost:8082/hop2";
 
 			ParameterizedTypeReference<Map<String, String>> ptr =
 					new ParameterizedTypeReference<Map<String, String>>() {
@@ -67,11 +64,8 @@ public class Hop1Application {
 			ResponseEntity<Map<String, String>> responseEntity =
 					this.restTemplate.exchange(url, HttpMethod.GET, null, ptr);
 
-			/*return ResponseEntity
-					.ok()
-					.contentType(responseEntity.getHeaders().getContentType())
-					.body(responseEntity.getBody());*/
-			this.log.info("received message: '" + msg + "'.");
+			log.info("this is the 1st hop");
+
 		}
 	}
 }

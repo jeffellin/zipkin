@@ -39,12 +39,12 @@ public class Hop2Application {
 		RestTemplate restTemplate;
 
 
-		@GetMapping("/hi")
+		@GetMapping("/hop2")
 		ResponseEntity<Map<String, String>> template() {
 
-			log.info("this is 2");
+			log.info("this is 2nd hop");
 
-			String url = "http://localhost:8083/hi";
+			String url = "http://localhost:8083/hop3";
 
 			ParameterizedTypeReference<Map<String, String>> ptr =
 					new ParameterizedTypeReference<Map<String, String>>() {
