@@ -39,6 +39,9 @@ public class Hop3Application {
 
 			response.put(key, value);
 
+
+				//String nullStr = null;;
+			//nullStr.equals("foo");
 			return response;
 		}
 	}
