@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: hop3
+logging:
+  config: classpath:logback-spring.xml

@@ -1,6 +1,5 @@
 package com.example.hop2;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
-@Slf4j
+
 public class Hop2Application {
 
 	@Bean
@@ -35,6 +34,7 @@ public class Hop2Application {
 	class MessageServiceRestController {
 
 
+		private Log log = LogFactory.getLog(getClass());
 
 
 		@Autowired
@@ -43,6 +43,8 @@ public class Hop2Application {
 
 		@GetMapping("/hop2")
 		ResponseEntity<Map<String, String>> template() {
+
+
 
 			log.info("this is 2nd hop");
 

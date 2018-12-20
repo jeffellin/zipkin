@@ -22,6 +22,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.integration.annotation.MessageEndpoint;
 import org.springframework.integration.annotation.ServiceActivator;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -30,7 +33,8 @@ import java.util.Map;
 
 @IntegrationComponentScan
 @SpringBootApplication
-@EnableBinding(Sink.class)
+//@EnableBinding(Sink.class)
+@EnableScheduling
 public class Hop1Application {
 
 	public static void main(String[] args) {
@@ -44,7 +48,7 @@ public class Hop1Application {
 
 
 
-	@MessageEndpoint
+	@Component
 	class MessageProcessor {
 
 		@Autowired
@@ -52,8 +56,10 @@ public class Hop1Application {
 
 		private Log log = LogFactory.getLog(getClass());
 
-		@ServiceActivator(inputChannel = Sink.INPUT)
-		public void onMessage(String msg) {
+		//@ServiceActivator(inputChannel = Sink.INPUT)
+		@Scheduled(fixedDelay = 5000)
+		public void onMessage() {
+			log.info("this is the 1st hop");
 
 			String url = "http://localhost:8082/hop2";
 
